@@ -1,0 +1,85 @@
+<html>
+    <head>
+         <link href="css/bootstrap.min.css" rel="stylesheet"> 
+         <link rel="icon"  type="image/icon"  href="Node.ico" />
+    </head>
+    <body ng-app="postgreSQL">
+        <div class="container"  ng-controller="postgreSQLCtrl">
+            <div id="signupSuccess" class="alert alert-success" style="display:none">
+              <p id="signupSuccessText">Thanks for signing up! You'll be among the first to know when we launch.</p>
+            </div>
+            <div id="signupDuplicate" class="alert alert-success" style="display:none">
+              <p id="signupDuplicateText">Fear not, you're already on the list! You'll be among the first to know when we launch.</p>
+            </div>
+            <div id="signupError" class="alert alert-info" style="display:none">
+              <p id="signupErrorText">Well this is embarrassing. It looks like we're having trouble getting you on the list.</p>
+            </div>
+            <div class="jumbotron">
+              <h1>The next big thing is coming...</h1>
+              <p class="lead">We're pretty thrilled to unveil our latest creation. Sign up below to be notified when we officially launch!</p>
+              <p><a class="btn btn-lg btn-success"  data-toggle="modal" href="#signupModal">Sign up today</a></p>
+            </div>
+      
+      
+            <div class="footer">
+              <p>&copy;Nermin Barucija 2018</p>
+            </div>
+            
+            <!-- Modal -->
+             <div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="signupModal" aria-hidden="true">
+               <div class="modal-dialog">
+                 <div class="modal-content">
+                   <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                     <h4 class="modal-title">Provide a few details and we'll be in touch...</h4>
+                   </div>
+                   <div class="modal-body">
+                     <div class="controls form-inline form-group">
+                       
+                         <label for="name">Name</label>
+                         <input type="text" class="form-control" id="name" ng-model="name" name="name" placeholder="Your name">
+                       
+    
+                         <label for="email">Email address</label>
+                         <input type="text" class="form-control" id="email" ng-model="email" name="email" placeholder="Your email address">
+                    
+                    </div>
+                   </div>
+                   <div class="modal-footer">
+                     <button id="signup" type="button" ng-click="addRecord()" class="btn btn-primary">Sign Up!</button>
+                   </div>
+                 </div><!-- /.modal-content -->
+               </div><!-- /.modal-dialog -->
+             </div><!-- /.modal -->
+      
+          </div> <!-- /container -->
+        <script src="lib/angular.min.js"></script>
+        <script src="lib/jquery.js"></script>
+        <script src="lib/bootstrap.min.js"></script>
+        <script>
+ 
+            var myApp = angular.module('postgreSQL',[ ]); 
+             
+            myApp.controller('postgreSQLCtrl', ['$scope' ,'$http',  function($scope,$http) {
+                $scope.val1 = 'This is temp Val' ;  
+                $scope.name = '';
+                $scope.email = '';  
+                $scope.addRecord = function(){ 
+                    console.log($scope.email)
+                    $http({method: 'GET', url: '/db/addRecord?name='+$scope.name+'&email='+$scope.email}).
+                        success(function(data, status) { 
+                            $("#signupSuccess").show();
+                            $("#signupModal").modal('hide');
+                        })
+                        .error(function(data, status) {
+                            $("#signupError").show();
+                            $("#signupModal").modal('hide');
+                        });
+                }
+            }]);
+ 
+        </script>
+        
+    </body>
+    
+</html>
