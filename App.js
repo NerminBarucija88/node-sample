@@ -15,7 +15,7 @@ app.get('/' , function(req,res) {
     res.sendfile('views/index.html');
 } );
 
-app.get('/test' , function(req,res) {
+app.get('/signed' , function(req,res) {
     res.sendfile('views/data.html');
 } );
 
