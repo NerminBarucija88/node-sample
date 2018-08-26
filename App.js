@@ -19,6 +19,10 @@ app.get('/signed' , function(req,res) {
     res.sendfile('views/data.html');
 } );
 
+app.get('/health' , function(req,res) {
+    res.json({ health: "ok" });
+} );
+
 app.get('/db/readRecords', function(req,res){
     dbOperations.getRecords(req,res);
 });
